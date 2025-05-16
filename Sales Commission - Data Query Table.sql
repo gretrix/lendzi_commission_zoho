@@ -86,7 +86,12 @@ FROM (/* Standardized subquery ensuring 7 columns in all SELECTs*/
 			 'Manager Override' AS "Reason",
 			 "Total Revenue" AS "Total",
 			 "Override Commission" AS "Commission",
-			 0.015 AS "Commission_Multiplier",
+			 
+				/* Use CASE statement to set different commission multipliers based on Manager ID*/
+				CASE
+					 WHEN "Manager ID"  = '4470003000014600001' THEN 0.01 /* 1% for Dean Jones*/
+					 ELSE 0.015 /* 1.5% for everyone else*/
+				 END AS "Commission_Multiplier",
 			 "Deal Name" AS "Deal_Name",
 			 "Employee Name" AS "Subordinate Name"
 	FROM  "Manager Override - Query Table.sql" 

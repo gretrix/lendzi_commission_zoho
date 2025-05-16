@@ -33,7 +33,12 @@ SELECT
 		 ER."Professional_Fee" AS "Professional Fee",
 		 ER."Origination_Fee" AS "Origination Fee",
 		 ER."Total_Revenue" AS "Total Revenue",
-		 ER."Total_Revenue" * 0.015 AS "Override Commission"
+		 
+			/* Use different override rate for specific manager*/
+			CASE
+				 WHEN ER."Manager_ID"  = '4470003000014600001' THEN ER."Total_Revenue" * 0.01 /* 1% for Dean Jones*/
+				 ELSE ER."Total_Revenue" * 0.015 /* 1.5% for everyone else*/
+			 END AS "Override Commission"
 FROM  EmployeeRevenue ER 
 ORDER BY ER."Manager_Name",
 	 ER."Commission_Date",
