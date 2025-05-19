@@ -83,18 +83,25 @@ FROM (/* Standardized subquery ensuring 7 columns in all SELECTs*/
  	SELECT
 			 "Commission Date" AS "Earned_Date",
 			 "Manager ID" AS "Sales_Person_ID",
+			 "Reason Type" AS "Reason",
+			 "Total Revenue" AS "Total",
+			 "Override Commission" AS "Commission",
+			 0.01 AS "Commission_Multiplier",
+			 /* Fixed 1% for Renewal Manager Override*/ "Deal Name" AS "Deal_Name",
+			 "Employee Name" AS "Subordinate Name"
+	FROM  "Renewal Manager Override - Query Table" 
+	UNION ALL
+ 	SELECT
+			 "Commission Date" AS "Earned_Date",
+			 "Manager ID" AS "Sales_Person_ID",
 			 'Manager Override' AS "Reason",
 			 "Total Revenue" AS "Total",
 			 "Override Commission" AS "Commission",
-			 
-				/* Use CASE statement to set different commission multipliers based on Manager ID*/
-				CASE
-					 WHEN "Manager ID"  = '4470003000014600001' THEN 0.01 /* 1% for Dean Jones*/
-					 ELSE 0.015 /* 1.5% for everyone else*/
-				 END AS "Commission_Multiplier",
-			 "Deal Name" AS "Deal_Name",
+			 0.015 AS "Commission_Multiplier",
+			 /* Standard 1.5% for Manager Override*/ "Deal Name" AS "Deal_Name",
 			 "Employee Name" AS "Subordinate Name"
 	FROM  "Manager Override - Query Table.sql" 
+ 
  
  
  
