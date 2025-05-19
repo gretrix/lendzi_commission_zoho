@@ -86,3 +86,4 @@ JOIN "Fundings" F2 ON R2."Id"  = F2."Renewal"
 WHERE	 F."Clawback Date"  IS NOT NULL /* Only for fundings with clawbacks*/
  
 ORDER BY R."Renewal Name" 
+
